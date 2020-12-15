@@ -10,6 +10,7 @@ void main() {
   final hello_route = router.register('/', 'hello/:name', (Url url) => 
     authOk(() => print("hello '${url.params['name']}'"))
   );
+  // ignore: unused_local_variable
   final home_route = router.register('/', 'Home', (Url url) => 
     authOk(() => print('home screen'))
   );
