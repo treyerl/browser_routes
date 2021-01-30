@@ -77,4 +77,4 @@ pub run test -p chrome test/browser_routes_test_async.dart
 
 Please file feature requests and bugs at the [issue tracker][tracker].
 
-[tracker]: http://github.com/issues/replaceme
+[tracker]: https://github.com/treyerl/browser_routes/issues
