@@ -1,3 +1,7 @@
+## 1.0.0-nullsafety.1
+
+- there is no nullable version of this library
+
 ## 1.0.0
 
 - wildcard urls `/api/*`
