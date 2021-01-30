@@ -137,8 +137,9 @@ class _SegmentTemplate extends _Segment{
   String? get orValue => name;
 }
 
-/// definition of a segment used by [Route] that contains a named placeholder
-/// filled with string values in "real" urls
+/// definition of a segment containing a named 
+/// placeholder filled with string values in "incoming" urls. 
+/// Used for defining a [Route].
 class _ValueSegmentTemplate extends _SegmentTemplate {
   _ValueSegmentTemplate(int index, this.label, String name): super(index, name);
   @override
@@ -149,6 +150,9 @@ class _ValueSegmentTemplate extends _SegmentTemplate {
   String get templateIdentity => '-';
 }
 
+/// definition of a segment containing a named
+/// placeholder is optionally part of URL and must follow
+/// mandatory [_ValueSegmentTemplate]s. Used for defining a [Route].
 class _OptionalValueSegmentTemplate extends _ValueSegmentTemplate {
   _OptionalValueSegmentTemplate(int index, String label, String name) : super(index, label, name);
 
@@ -159,6 +163,8 @@ class _OptionalValueSegmentTemplate extends _ValueSegmentTemplate {
   bool matches(_Segment? f) => true;
 }
 
+/// Must be the last segment definition of a [Route]. Allows
+/// any number of segments to follow.
 class _WildcardSegmentTemplate extends _SegmentTemplate {
   _WildcardSegmentTemplate(int index) : super(index, '~');
 
@@ -169,6 +175,7 @@ class _WildcardSegmentTemplate extends _SegmentTemplate {
   bool matches(_Segment? f) => true;
 }
 
+/// shared by [Route] and [ErrorRoute]
 abstract class _RouteBase<T extends StateObject> {
   /// the title of a web page
   String get title;
@@ -336,7 +343,7 @@ class ErrorRoute extends _RouteBase{
   
 }
 
-/// registry of the routes
+/// registry of [Route]s
 class Router {
   Router({required bool Function(Url url) onError, String root = '/'}):
     errorRoute = ErrorRoute._(onError),
@@ -345,6 +352,7 @@ class Router {
       go(e.state);
     });
   }
+  /// used for unit tests
   Router.test({required bool Function(Url url) onError, String root = '/'}):
     errorRoute = ErrorRoute._(onError),
     _root = root;
@@ -404,7 +412,6 @@ class Router {
     
     // take first route where all templates matches with segments; = nullable firstWhere (...)
     for (var c in candidates) {
-
       if (c.segments.every((s) => s.index < urlSegments.length ? s.matches(urlSegments[s.index]) : s.matches(null))){
         route = c;
         break;

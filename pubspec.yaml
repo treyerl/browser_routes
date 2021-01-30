@@ -1,6 +1,6 @@
 name: browser_routes
 description: General Purpose In-Browser Routing. Null safe.
-version: 0.9.0
+version: 1.0.0
 
 environment:
   sdk: '>=2.12.0-13.0.dev <3.0.0'

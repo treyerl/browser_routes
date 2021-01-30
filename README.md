@@ -1,7 +1,11 @@
-In-browser routing for simple dart driven single page applications (SPA). 
+In-browser routing for simple dart-driven single page applications (SPA). Support for:
 
-Created from templates made available by Stagehand under a BSD-style
-[license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).
+1. plain urls: `/my/example/page`
+2. named path variable: `/hello/:name`
+3. optionally named path variables: `/hello/:name/:?andGuest`
+4. path with wildcards: `/api/*` to allow for dynamic content or route to a subsystem
+
+Incoming URL's are compared by segment length first. Route definitions with equal length are resolved in the order as defined above.
 
 ## Usage
 
@@ -32,7 +36,7 @@ void main() {
   final router = HashRouter(onError: (Url url) => 
     authOk(() => print('${url.code}: $url'))
   );
-  final hello_route = router.register('/', 'hello/:name', (Url url) => 
+  final hello_route = router.register('hello/:name', 'Hello World', (Url url) => 
     authOk(() => print("hello '${url.params['name']}'"))
   );
   final home_route = router.register('/', 'Home', (Url url) => 
